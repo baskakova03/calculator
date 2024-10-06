@@ -1,13 +1,24 @@
 stages:
+  - semgrep-scan
   - build
   - deploy
-  - test
-  - security-scan
+  - trivy-scan
+
 
 variables:
-  DOCKER_DRIVER: overlay2
-  IMAGE_NAME: $CI_REGISTRY_IMAGE/my-fastapi-calculator:$CI_COMMIT_REF_SLUG
+  IMAGE_NAME: $CI_REGISTRY_IMAGE/api-calculator:latest
 
+security_scan_semgrep:
+  stage: semgrep-scan
+  image: returntocorp/semgrep:latest
+  script:
+    - semgrep --config auto --json --output semgrep_report.json $CI_PROJECT_DIR
+  artifacts:
+    paths:
+      - semgrep_report.json
+    when: always
+  only:
+    - main
 
 build:
   stage: build
@@ -20,7 +31,6 @@ build:
     - docker push $IMAGE_NAME
   only:
     - main
-
 
 deploy:
   stage: deploy
@@ -41,7 +51,7 @@ deploy:
 
 
 security_scan_trivy:
-  stage: security-scan
+  stage: trivy-scan
   image: docker:20.10.16-dind
   services:
     - docker:20.10.16-dind
@@ -53,19 +63,6 @@ security_scan_trivy:
   artifacts:
     paths:
       - trivy_report.json
-    when: always
-  only:
-    - main
-
-
-security_scan_semgrep:
-  stage: security-scan
-  image: returntocorp/semgrep:latest
-  script:
-    - semgrep --config auto --json --output semgrep_report.json $CI_PROJECT_DIR
-  artifacts:
-    paths:
-      - semgrep_report.json
     when: always
   only:
     - main
