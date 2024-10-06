@@ -1,8 +1,8 @@
 stages:
   - semgrep-scan
   - build
-  - deploy
   - trivy-scan
+  - deploy
 
 
 variables:
@@ -32,24 +32,6 @@ build:
   only:
     - main
 
-deploy:
-  stage: deploy
-  image: docker:20.10.16
-  services:
-    - docker:20.10.16-dind
-  script:
-    - apk add curl
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-    - docker pull $IMAGE_NAME
-    - docker run -d -p 8000:8000 --name calculator $IMAGE_NAME
-    - sleep 10
-    - curl -L http://docker:8000/
-    - curl -L "http://docker:8000/add?a=1&b=2"
-    - curl -L "http://docker:8000/divide?a=1&b=0"
-  only:
-    - main
-
-
 security_scan_trivy:
   stage: trivy-scan
   image: docker:20.10.16-dind
@@ -64,5 +46,22 @@ security_scan_trivy:
     paths:
       - trivy_report.json
     when: always
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  script:
+    - apk add curl
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker pull $IMAGE_NAME
+    - docker run -d -p 8000:8000 --name calculator $IMAGE_NAME
+    - sleep 10
+    - curl -L http://docker:8000/
+    - curl -L "http://docker:8000/add?a=1&b=2"
+    - curl -L "http://docker:8000/divide?a=1&b=0"
   only:
     - main
