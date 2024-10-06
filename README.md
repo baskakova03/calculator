@@ -33,6 +33,30 @@
 ![image](https://github.com/user-attachments/assets/244735e8-8006-4802-948c-a6b8d5e3cbda)  
 
 Отработка пайплайна:  
+![image](https://github.com/user-attachments/assets/91a21e23-294e-480b-b8f5-f305cdac5194)
+
+Образ в Gitlab Registry:  
+![image](https://github.com/user-attachments/assets/aa4bba90-c89d-4bdc-b06d-d4e60102ea46)  
+
+Результат выполнения этапа запуска контейнера и тестирования калькулятора:  
+![image](https://github.com/user-attachments/assets/76c31890-6327-4ce6-98c3-076d7864c707)  
+
+## №4. Анализ работы инструментов безопасности:  
+
+**Semgrep**  
+Отчет показал, что никаких уязвимостей не было найдено:  
+![image](https://github.com/user-attachments/assets/03151a73-d01d-4b5e-aab6-0b2a10e5b269)  
+
+**Trivy**  
+В начала отчета представлен операционная система на которой построен образ, в данном случае это debian 12. Далее показаны хэши образа и его слоев:  
+![image](https://github.com/user-attachments/assets/093e73da-5322-4421-b68c-e5984b984b7f)  
+
+
+
+
+
+
+
 
 
 
