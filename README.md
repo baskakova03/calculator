@@ -45,7 +45,7 @@
 
 **Semgrep**  
 Отчет показал, что никаких уязвимостей не было найдено:  
-![image](https://github.com/user-attachments/assets/03151a73-d01d-4b5e-aab6-0b2a10e5b269)  
+![image](https://github.com/user-attachments/assets/fb6fed34-7648-4c09-8ad8-c876aace3852)
 
 **Trivy**  
 В начала отчета представлен операционная система на которой построен образ, в данном случае это debian 12. Далее показаны хэши образа и его слоев:  
